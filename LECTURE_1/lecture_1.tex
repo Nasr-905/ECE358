@@ -1,0 +1,146 @@
+\chapterimage{./Images/head2.jpg} % Chapter heading image
+\chapter{The Introduction}
+\section{Administrative Information}
+
+\begin{itemize}
+    \item Similar to ECE345, may be able to substitute lectures
+    \item 5 homeworks, no extensions
+    \item Textbook: CLRS (Cormen, Leiserson, Rivest, Stein)
+    \item Course email: ece.algorithms+358@gmail.com
+    \item Homework: 20\%
+    \item \begin{itemize}
+        \item Groups of 2-3
+        \item You can switch Groups
+    \end{itemize}
+    \item Midterm: 30\%
+    \item \begin{itemize}
+        \item Open Textbook + Notes
+    \end{itemize}
+    \item Final: 45\%
+    \item \begin{itemize}
+        \item Open Textbook + Notes
+    \end{itemize}
+\end{itemize}
+
+\section{Course Overview}
+\begin{itemize}
+    \item Background (Discrete Math, ~5 lectures): Asymptotic Analysis, recurrences, summations, graph/trees, permutation \& combinations
+    \item Sorting (~4 lectures): Quick, Heap, Radix/Counting, Lower Bound
+    \item Binary Search Trees (~3 lectures): Red-Black, searching min/max
+    \item Hashing (~ 1 lecture)
+    \item Greedy Algorithms (~2 lectures)
+    \item Dynamic Programming (~2 lectures)
+    \item \textbf{Midterm}
+    \item Amoratized analysis \& splay trees (~3 lectures)
+    \item Grph Algorithms (~3 lectures)
+    \item \begin{itemize}
+        \item Basic (~1 lecture)
+        \item MSTs (~1 lecture)
+        \item Shortest Paths (~1 lecture)
+        \item Max Flow (~2 lecture)
+    \end{itemize}
+    \item History of Computations (~1 lecture)
+    \item NP-Completeness (~5 lectures)
+    \item Blockchain \& Cryptography (After hours)
+\end{itemize}
+
+\section{Asymptotics}
+\begin{definition}
+    {Big-O Notation, Upper Bound}
+    We say that $f(n) = O(g(n))$ \textit{iff} $O(g(n)) = f(n): \exists$ positive constants $c$ and $n_0$ such that $0 \leq f(n) \leq c\times g(n)$ for all $n \geq n_0$
+\end{definition}
+% Functions c times g(n) upper bound, f(n), and h(n) lower bound are plotted using tikz 
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \draw[->] (0,0) -- (10,0) node[right] {$n$};
+        \draw[->] (0,0) -- (0,10) node[above] {$f(n)$};
+        \draw[domain=0:10,smooth,variable=\x,blue] plot ({\x},{\x}) node[right] {$f(n)$};
+        \draw[domain=0:10,smooth,variable=\x,red] plot ({\x},{0.5*\x}) node[right] {$g(n)$};
+        \draw[domain=0:10,smooth,variable=\x,green] plot ({\x},{0.25*\x}) node[right] {$h(n)$};
+    \end{tikzpicture}
+\end{figure}
+% add a dotted n_0 line near the origin (n_0) is small
+
+Essentialy, we don't care about small value, we care about the upper bound of the functions $f(n)$ and $g(n)$ as $n$ approaches infinity.
+
+\begin{example}
+    \begin{align*}
+        f(n) &= 3n + 7 \in O(n)\\
+        13n + 7 &\leq 14n, n_0 = 7, c = 14
+    \end{align*}
+    We can see that $f(n)$ is bounded by $O(n)$ because $f(n) \leq c\times g(n)$ for all $n \geq n_0$. \\
+    You can choose any $c$ and $n_0$ that satisfies the inequality.
+\end{example}
+
+\begin{example}
+    \begin{align*}
+        n! = 1\times 2 \times 3 \ldots n \leq n \times n \cdots n = O(n^n)\\
+    \end{align*}
+\end{example}
+
+\begin{definition}
+    {Big-$\Omega$ Notation, Lower Bound}
+    We say that $f(n) = \Omega(h(n))$ \textit{iff} $O(h(n)) = f(n): \exists$ positive constants $c$ and $n_0$ such that $0 \leq c\times h(n) \leq f(n)$ for all $n \geq n_0$
+\end{definition}
+
+\begin{example}
+    [Arithmetic Sequence]
+    \begin{align*}
+        1 + 2 + 3 + \cdots + n \geq (\frac{n}{2}) + (\frac{n}{2} + 1) + \cdots + (n) \geq \frac{n}{2}\times \frac{n}{2} = (c = \frac{1}{4}) - n^2 = \Omega(n^2), n_0 \geq 1
+    \end{align*}
+\end{example}
+
+\begin{definition}
+    {Big-$\Theta$ Notation, Tight Bound}
+    We say that $f(n) = \Theta(g(n))$ \textit{iff} $O(g(n)) = f(n) \land \Omega(g(n)) = f(n)$
+\end{definition}
+
+\begin{example}
+    \begin{align*}
+        1 + 2 + 3 + \cdots + n = \frac{n(n+1)}{2} = 
+        \frac{n^2}{2} + \frac{n}{2} + 1= \Theta(n^2)
+    \end{align*}
+\end{example}
+
+\begin{example}
+    [Summation]
+    Show that $\sum_{i=1}^{n} i^k = \Theta(n^{k+1})$
+    \begin{align*}
+        \sum_{i=1}^{n} i^k & \leq \sum_{i=1}^{n} n^{k} = n^{k+1} = O(n^{k+1})\\
+    \end{align*}
+    Therefore, $\sum_{i=1}^{n} i^k = O(n^{k+1})$, now we need to show that $\sum_{i=1}^{n} i^k = \Omega(n^{k+1})$
+    \begin{align*}
+        2f(n) =& \sum_{i=1}^{n}i^k + \sum_{i=1}^{n}(n-i+1)^k  \\
+        = & 1 + 2^k + 3^k + \cdots + n^k + n^k + (n-1)^k + \cdots + 1^k\\
+    \end{align*}
+    \begin{align*}
+        \sum_{i=1}^{n} i^k & \geq \sum_{i=\frac{n}{2}}^{n} i^k \geq \sum_{i=\frac{n}{2}}^{n} (\frac{n}{2})^k = \frac{n}{2} \times (\frac{n}{2})^k = \frac{n^{k+1}}{2^{k+1}} = \Omega(n^{k+1})
+    \end{align*}
+\end{example}
+
+\subsection*{Cookbook}
+\begin{definition}
+    [Transitivity]
+    If $f(n) = \Theta(g(n))$ and $g(n) = \Theta(h(n))$, then $f(n) = \Theta(h(n))$
+\end{definition}
+
+
+\begin{definition}
+    [Symmetry]
+    \begin{align*}
+        f(n) &= \Theta(g(n)) \text{ \textit{iff} } g(n) = \Theta(f(n)) \\
+        f(n) &= O(g(n)) \text{ \textit{iff} } g(n) = \Omega(f(n))
+    \end{align*}
+\end{definition}
+
+\begin{theorem}
+    [Other Properties]
+    \begin{align*}
+        n^a & \in O(n^b) \text{ \textit{iff} } a \leq b\\
+        \log_a(n) & \in O(\log_b(n)) \forall a, b \\
+        c^n & \in O(d^n) \text{\textit{iff}} c \leq d \\
+        \text{If } f(n) & \in O(g(n)) \text{ and } h(n) \in O(k(n)) \text{ then } f(n) + h(n) \in O(g(n) + k(n))\\
+    \end{align*}
+    
+\end{theorem}
