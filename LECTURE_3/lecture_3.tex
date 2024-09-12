@@ -1,0 +1,261 @@
+\chapter[short]{Mathematical Proofs}
+\section{Proof by Induction}
+
+\begin{theorem}
+    [Principle of Mathematical Induction]
+    The predicate $P(n)$ is true for all $n \geq 0$ if:
+    \begin{align}
+        \text{Basis: }          & P(0) \text{ is true since } 0 < 2^0 = 1. \\
+        \text{Hypothesis: }     & P(k) \text{ is true for some } k \geq 0. \\
+        \text{Inductive Step: } & P(k) \implies P(k+1).                    \\
+    \end{align}
+
+\end{theorem}
+
+\begin{example}
+    Show $n < 2^n$ for all $n \geq 0$.
+    \begin{proof}
+        \begin{itemize}
+            \item Basis: $0 < 2^0 = 1$.
+            \item Hypothesis: for $n$ that is we assume $n < 2^n$.
+            \item Inductive Step: we prove $n+1 < 2^{n+1}$.
+                  \begin{align*}
+                      n+1 & < 2^n + 1 \text{ (by hypothesis)} \\
+                          & < 2^n + 2^n = 2^{n+1}.
+                  \end{align*}
+        \end{itemize}
+    \end{proof}
+\end{example}
+
+\begin{example}
+    Prove the sum o fthe first $n$ odd numbers is $n^2$.
+    \begin{proof}
+        \begin{itemize}
+            \item Basis: $1 = 1^2$.
+            \item Hypothesis: for $n$ we assume $1 + 3 + \ldots + (2n-1) = n^2$.
+            \item Inductive Step: we prove $1 + 3 + \ldots + (2n-1) + (2n+1) = (n+1)^2$.
+                  \begin{align*}
+                      1 + 3 + \ldots + (2n-1) + (2n+1) & = n^2 + 2n + 1 \\
+                                                       & = (n+1)^2.
+                  \end{align*}
+        \end{itemize}
+    \end{proof}
+\end{example}
+
+\begin{definition}
+    [Power Set]
+    The power set of a set $S$ is the set of all subsets of $S$. \\
+    \textbf{Notation:} $2^S$.
+\end{definition}
+
+\begin{example}
+    [Power Set]
+    Let $S = {A, B, C}$. Then:
+    \begin{align}
+        2^S & = \{\emptyset, \{A\}, \{B\}, \{C\}, \{A, B\}, \{A, C\}, \{B, C\}, \{A, B, C\}\}.
+    \end{align}
+\end{example}
+
+\begin{claim}
+    [Power Set]
+    The powerset of S, $2^S$, has $2^{|S|}$ elements.
+\end{claim}
+\begin{proof}
+    \begin{itemize}
+        \item Basis: $|S| = 1$ so $S = {A}$ and $2^S = \{\emptyset, A\}$, which has $2^1 = 2$ elements.
+        \item Hypothesis: $|S| = n$ elements has $2^n$ elements.
+        \item Inductive Step: $|S| = n+1$ elements has $2^{n+1}$ elements.
+              \begin{align*}
+                  2^{n+1} & = 2^n \cdot 2 = 2 \cdot 2^n.
+              \end{align*}
+        \item[] \textit{Imagine a set with $n$ elements, and we add one more, using combinatorics, we can see that one elements combined with all the subsets of the $n$ elements set will give us $2^n$ additional subsets.}
+    \end{itemize}
+\end{proof}
+
+\begin{claim}
+    [Chess Sets]
+    Show that every $2^n \times 2^n$ chessboard with any one square removed can be tiled with $1\times1$ L-shaped tiles.
+\end{claim}
+\begin{proof}
+    \begin{itemize}
+        \item Basis: $2^0 \times 2^0$ chessboard is a $1\times1$ chessboard, which is already tiled.
+        \item Hypothesis: $2^n \times 2^n$ chessboard can be tiled.
+        \item Inductive Step: $2^{n+1} \times 2^{n+1}$ chessboard can be tiled.
+              \begin{itemize}
+                  \item Divide the $2^{n+1} \times 2^{n+1}$ chessboard into four $2^n \times 2^n$ chessboards.
+                  \item Remove one square from the $2^{n+1} \times 2^{n+1}$ chessboard.
+                  \item Remove the square that is not in the same $2^n \times 2^n$ chessboard as the removed square.
+                  \item Tile the remaining $2^{n+1} \times 2^{n+1}$ chessboard.
+              \end{itemize}
+    \end{itemize}
+\end{proof}
+
+\section{Proof by Contradiction}
+\begin{definition}
+    [Proof by Contradiction]
+    You get predicate $P(n)$ is true for all $n \geq 0$ by assuming that $P(n)$ is false for some $n \geq 0$ and deriving a contradiction.
+\end{definition}
+
+\begin{claim}
+    if $x^2 - 5x + 4 < 0$ then $x > 0$.
+\end{claim}
+\begin{proof}
+    \begin{itemize}
+        \item Assume $x^2 - 5x + 4 < 0$ and $x \leq 0$.
+        \item $x^2 - 5x + 4 < 0 \iff x^2 < 5x - 4 \iff x^2 < \text{some negative number}$.
+        \item Which is a contradiction because $x^2$ is always positive.
+    \end{itemize}
+\end{proof}
+
+\begin{claim}
+    If $3n+2$ is odd then $n$ is odd.
+\end{claim}
+
+\begin{proof}
+    \begin{itemize}
+        \item Assume $3n+2$ is odd and $n$ is even.
+        \item $n = 2k$ for some integer $k$.
+        \item $3n+2 = 3(2k) + 2 = 6k + 2 = 2(3k+1) = $ an even number, a contradiction.
+    \end{itemize}
+\end{proof}
+
+\begin{claim}
+    $\sqrt{2}$ is irrational.
+\end{claim}
+\begin{proof}
+    \begin{itemize}
+        \item Assume $\sqrt{2}$ is rational.
+        \item $\sqrt{2} = \frac{a}{b}$ for some integers $a$ and $b$.
+        \item $2 = \frac{a^2}{b^2} \iff 2b^2 = a^2$.
+        \item $a^2$ is even $\iff a$ is even.
+        \item $a = 2k$ for some integer $k$.
+        \item $2b^2 = (2k)^2 = 4k^2 \iff b^2 = 2k^2$.
+        \item $b^2$ is even $\iff b$ is even.
+        \item $\frac{a}{b}$ is not in lowest terms, a contradiction.
+    \end{itemize}
+\end{proof}
+
+\begin{claim}
+    If $a^2 = $ even, then $a$ is even.
+\end{claim}
+\begin{proof}
+    \begin{itemize}
+        \item Assume $a^2$ is even and $a$ is odd.
+        \item $a = 2k+1$ for some integer $k$.
+        \item $a^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$.
+        \item $a^2$ is odd, a contradiction.
+    \end{itemize}
+\end{proof}
+
+\section{Permutations and Combinations}
+\begin{definition}
+    [Rule of Product]
+    If there are $n_1$ ways to do task A and $n_2$ ways to do task B, then there are $n_1 \cdot n_2$ ways to do both tasks.
+\end{definition}
+
+\begin{definition}
+    [Rule of Sum]
+    If there are $n_1$ ways to do task A and $n_2$ ways to do task B, then there are $n_1 + n_2$ ways to do either task A or task B.
+\end{definition}
+
+\begin{example}
+    Choose $2$ books, one from each: 5 Latin books, 7 Greek, 10 Frnech.
+    \begin{itemize}
+        \item $5 \cdot 7 = 35$ ways to choose a Latin and a Greek book.
+        \item $5 \cdot 10 = 50$ ways to choose a Latin and a French book.
+        \item $7 \cdot 10 = 70$ ways to choose a Greek and a French book.
+        \item $35 + 50 + 70 = 155$ ways to choose two books.
+    \end{itemize}
+
+\end{example}
+\section{Permutations}
+\begin{vocabulary}
+    $p(n,x) = $ number of ways to arrange $x$ objects out of $n$ when order matters. \\
+    $p(n,x) = \frac{n!}{(n-x)!}$.
+\end{vocabulary}
+
+\begin{proof}
+    [Permutations]
+    \begin{itemize}
+        \item There are $n$ ways to choose the first object.
+        \item There are $n-1$ ways to choose the second object.
+        \item There are $n-x+1$ ways to choose the $x$th object.
+        \item There are $n \cdot (n-1) \cdot \ldots \cdot (n-x+1) = \frac{n!}{(n-x)!}$ ways to choose $x$ objects.
+    \end{itemize}
+\end{proof}
+\begin{example}
+    [In how many ways n people can sit around a circular table?]
+    For a line, there are $p(n,n)$ ways to order a group of $n$ people, but in a circle, then the first person can either be in the front or back, so: $p(n,n) = \frac{n!}{(n-r)!} = (n-1)!$
+\end{example}
+
+\begin{theorem}
+    []
+    If not all objects are distinct, but we got:
+    \begin{itemize}
+        \item $q_1$ of the first kind
+        \item $q_2$ of the second kind
+        \item $q_k$ of the $k^{\text{th}}$ kind
+    \end{itemize}
+    Then: $\frac{n!}{q_1!q_2!\ldots q_k!}$
+\end{theorem}
+
+\begin{example}
+    Five black balls and eight white balls can be arranged in:
+    \[
+        \frac{13!}{5!8!}
+    \]
+\end{example}
+
+\begin{example}
+    Show that $(k!)!$ is divisible by $(k!)^{(k-1)!}$ giving a combinatorical argument.
+    \begin{itemize}
+        \item $k$ of the first kind
+        \item $k$ of the second kind
+        \item $k$ of the $(k-1)!$ kind
+    \end{itemize}
+    $\therefore k(k-1)! = k!$ total
+    \[
+        \frac{(k!)!}{k!k!\ldots k!} = \frac{(k!)!}{(k!)^{(k-1)!}}
+    \]
+\end{example}
+
+\begin{example}
+    Among 10 billion numbers between $1, \ldots, 10,000,000,000$ how many contain the digit "$1$"? \\
+    \textbf{Solution:} \\
+    Think between $1, \ldots, 9,999,999,999$.\\
+    There are $9$ ways to choose each digit, so $9^{10}$ numbers without the number $1$. There are $10^{10}$ total numbers \\
+    So there are $10^{10} - 9^{10}$ numbers with the digit $1$.
+    EDIT THIS, MIGHT BE INCORRECT
+\end{example}
+
+\section{Combinations}
+\begin{definition}
+    [Combinations]
+    $c(n,r) = $ number of ways to choose $x$ objects out of $n$ when order does not matter. \\
+    $c(n,r) = \frac{n!}{r!(n-r)!} = \frac{p(n,r)}{r!} = \left( \begin{matrix}
+                n \\
+                r
+            \end{matrix} \right). $ \\
+    $c(n,r) = c(n,n-r)$.
+\end{definition}
+
+\begin{example}
+    In how many ways can three digit numbers be selected from a set containing numbers in the hundreds such that they're unique sum is divisible by $3$?
+    \begin{itemize}
+        \item $0 \mod 3$: $3 \cdot 3 \cdot 2 = 18$ ways.
+        \item $1 \mod 3$: $3 \cdot 3 \cdot 3 = 27$ ways.
+        \item $2 \mod 3$: $3 \cdot 3 \cdot 3 = 27$ ways.
+        \item $18 + 27 + 27 = 72$ ways.
+    \end{itemize}
+    EDIT, THIS MIGHT BE INCORRECT
+\end{example}
+
+\begin{example}
+    Eleven scientists are working on a secret project. They lock the docs into a cabinet that can open \textit{iff} at least $6$ of the scientists are present. \\
+    a) What is the smallest # of locks needed for the cabinet \\
+    b) What is the smallest # of keys each scientist need have? \\
+
+    \textbf{Solution:} \\
+    a) $c(11,5) = 462$ locks. \\
+    b) $c(10,5) = 252$ keys. Because any scientist should be able to join any group of 5 to open the cabinet.
+\end{example}
